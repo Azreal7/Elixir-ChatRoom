@@ -10,7 +10,7 @@ by adding `chatroom` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:chatroom, "~> 0.1.0"}
+    {:chatroom, "~> 0.1.0"}1
   ]
 end
 ```
