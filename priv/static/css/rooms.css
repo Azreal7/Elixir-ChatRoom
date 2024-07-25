@@ -1,0 +1,22 @@
+.hidden {
+    display: none;
+}
+
+#new-room-form {
+    margin-bottom: 1em;
+}
+
+#room-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.room-item {
+    cursor: pointer;
+    padding: 0.5em;
+    border-bottom: 1px solid #ccc;
+}
+
+.room-item:hover {
+    background-color: #f0f0f0;
+}
