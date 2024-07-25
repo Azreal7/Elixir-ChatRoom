@@ -7,40 +7,55 @@ body {
     margin: 0;
     background-color: #f0f2f5;
 }
-
 .login-container {
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     background-color: white;
+    width: 300px;
+    text-align: center;
 }
-
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
 .input-group {
     margin-bottom: 15px;
 }
-
 label {
     display: block;
     margin-bottom: 5px;
+    color: #555;
 }
-
 input {
-    width: 100%;
+    width: calc(100% - 16px);
     padding: 8px;
     border: 1px solid #ddd;
-    border-radius: 3px;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
-
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 button {
-    width: 100%;
+    width: 48%;
     padding: 10px;
     background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 3px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
-
 button:hover {
     background-color: #0056b3;
+}
+button[type="button"] {
+    background-color: #28a745;
+}
+button[type="button"]:hover {
+    background-color: #218838;
 }

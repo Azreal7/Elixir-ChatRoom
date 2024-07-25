@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             li.textContent = room;
             li.classList.add('room-item');
             console.log(room)
-            li.onclick = () => window.location.href = `/rooms/${room}`;
+            li.onclick = () => window.location.href = `${room}`;
             roomListElement.appendChild(li);
         });
     }

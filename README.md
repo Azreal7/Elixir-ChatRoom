@@ -1,21 +1,13 @@
 # Chatroom
 
-**TODO: Add description**
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `chatroom` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:chatroom, "~> 0.1.0"}1
-  ]
-end
+启动方式：
+```
+PORT=4000 iex --sname node1 -S mix
+PORT=4001 iex --sname node2 -S mix
+Node.connect(:"node1@localhost")
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/chatroom](https://hexdocs.pm/chatroom).
-
+检查进程用这个：
+```
+DynamicSupervisor.which_children(Chatroom.ChatroomSupervisor)
+```

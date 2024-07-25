@@ -21,7 +21,11 @@ defmodule Chatroom.Rooms do
   end
 
   def is_exist(room_name) do
-    (from r in Chatroom.Rooms, where: r.room_name == room_name, select: r)
+    res = (from r in Chatroom.Rooms, where: r.room_name == ^room_name, select: r)
     |> Chatroom.Repo.one()
+    case res do
+      nil -> :error
+      _ -> :ok
+    end
   end
 end

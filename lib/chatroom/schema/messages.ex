@@ -15,9 +15,8 @@ defmodule Chatroom.Message do
   def get_messages(chatroom_name) do
     (from m in Chatroom.Message,
       where: m.chatroom_name == ^chatroom_name,
-      order_by: [desc: :time_stamp],
       # limit: 2,
-      select: {m.sender, m.content})
+      select: m.content)
     |> Chatroom.Repo.all()
   end
 

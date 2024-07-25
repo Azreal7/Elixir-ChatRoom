@@ -36,6 +36,9 @@ defmodule Chatroom.RoomController do
         encoded_body = Jason.encode!(json_data)
         %{"name" => name} = Jason.decode!(body_params)
         Chatroom.Rooms.add_room(name)
+        # 在supervisor中添加房间
+        Chatroom.ChatroomSupervisor.new_room(name)
+
         conn
         |> Plug.Conn.put_status(:ok)
         |> Plug.Conn.put_resp_content_type("application/json")

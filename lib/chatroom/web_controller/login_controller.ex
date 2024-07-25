@@ -38,4 +38,11 @@ defmodule Chatroom.LoginController do
         |> Plug.Conn.send_resp(401, encoded_error_body)
     end
   end
+
+  def register(conn) do
+    {:ok, body_params, _conn} = Plug.Conn.read_body(conn)
+    %{"password" => password, "user_name" => name} = Jason.decode!(body_params)
+    Chatroom.User.add_user(name, password)
+    Plug.Conn.send_resp(conn, 200, "successfully registered")
+  end
 end

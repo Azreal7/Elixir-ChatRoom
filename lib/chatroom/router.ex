@@ -22,15 +22,22 @@ defmodule Router do
 
   post "/api/login", do: Chatroom.LoginController.login(conn)
 
-  get "/rooms" do
-    Chatroom.RoomController.index(conn)
-  end
+  get "/rooms", do: Chatroom.RoomController.index(conn)
 
   get "api/rooms", do: Chatroom.RoomController.refresh_list(conn, nil)
 
   post "api/rooms", do: Chatroom.RoomController.create_room(conn)
 
-  # post "api/rooms", do: Chatroom.RoomController.refresh_list(conn, nil)
+  get ":room_name", do: Chatroom.ChatController.index(conn)
+
+  post "api/users", do: Chatroom.LoginController.register(conn)
+
+  get "/socket/:room_name" do
+    Logger.info("trying to update..")
+    conn
+    |> WebSockAdapter.upgrade(Client, conn.params["room_name"], timeout: :infinity)
+    |> halt()
+  end
 
   # get "/websocket" do
   #   conn
