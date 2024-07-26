@@ -28,7 +28,9 @@ defmodule Chatroom.MixProject do
       {:jason, "~> 1.4"},
       {:plug, "~> 1.12"},
       {:bandit, "~> 1.5.5"},
+      {:libcluster, "~> 3.0"},
       {:websock_adapter, "~> 0.5.6"},
+      {:ex_hash_ring, "~> 6.0"},
       {:postgrex, "~> 0.15.7", only: [:prod]}
     ]
   end

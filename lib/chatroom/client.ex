@@ -21,6 +21,7 @@ defmodule Client do
   end
 
   def terminate(:timeout, room_name) do
+    Logger.info("client exited")
     Room.disconnect(self(), room_name)
     {:ok, room_name}
   end
@@ -28,6 +29,7 @@ defmodule Client do
   def terminate(reason, room_name) do
     # 这里可以添加适当的日志记录或错误处理逻辑
     IO.puts("Client terminated with reason: #{inspect(reason)}")
+    Room.disconnect(self(), room_name)
     {:ok, room_name}
   end
 

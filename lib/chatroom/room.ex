@@ -37,7 +37,13 @@ defmodule Room do
   end
 
   def handle_cast({:remove_session, session}, room_info) do
-    {:noreply, %RoomInfo{room_info | sessions: room_info.sessions -- [session]}}
+    new_sessions = room_info.sessions -- [session]
+    if new_sessions == [] do
+      Logger.info("Shutting down room #{room_info.name} as the last session is removed.")
+      {:stop, :normal, %RoomInfo{room_info | sessions: new_sessions}}
+    else
+      {:noreply, %RoomInfo{room_info | sessions: new_sessions}}
+    end
   end
 
   def handle_cast({:broadcast, message, sender}, room_info) do
@@ -52,6 +58,10 @@ defmodule Room do
   ### Client API
 
   def connect(pid, room_name) do
+    case :global.whereis_name(:"#{room_name}") do
+      :undefined -> Chatroom.ChatroomSupervisor.new_room(room_name)
+      _ -> nil
+    end
     GenServer.call({:global, :"#{room_name}"}, {:add_session, pid})
   end
 
