@@ -4,8 +4,10 @@
 ```
 PORT=4000 iex --sname node1 -S mix
 PORT=4001 iex --sname node2 -S mix
-Node.connect(:"node1@localhost")
+...
+PORT=n iex --sname noden -S mix
 ```
+已支持无限扩容，只需在启动时指定不同的端口即可。
 
 检查进程用这个：
 ```
