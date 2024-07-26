@@ -11,4 +11,11 @@ defmodule Chatroom.ChatController do
   defp room_page(room_name) do
     EEx.eval_file("priv/static/room.html.eex", room_name: room_name)
   end
+
+  def update(conn) do
+    Logger.info("trying to update..")
+    conn
+    |> WebSockAdapter.upgrade(Client, conn.params["room_name"], timeout: :infinity)
+    |> Plug.Conn.halt()
+  end
 end

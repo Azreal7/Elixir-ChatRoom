@@ -14,7 +14,6 @@ defmodule Chatroom.ChatroomSupervisor do
 
   def init_room(port) do
     room_list = Chatroom.Rooms.get_list()
-    # 添加哈希逻辑
     Enum.each(room_list, fn room ->
       if Chatroom.Hasher.map_string_to_range(room, 2) == Chatroom.Hasher.map_hash_to_range(String.to_integer(port), 2) do
         new_room(room)
@@ -25,8 +24,8 @@ defmodule Chatroom.ChatroomSupervisor do
   def new_room(room_name) do
     # Logger.info("In supervisor, trying to start #{room_name}")
     spec = %{
-      id: {:chatserver, room_name},
-      start: {ChatServer, :start_link, [room_name]},
+      id: {:room, room_name},
+      start: {Room, :start_link, [room_name]},
       restart: :permanent,
       type: :worker
     }

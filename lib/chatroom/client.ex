@@ -4,7 +4,7 @@ defmodule Client do
   # room_name 存储client对应哪个room
   def init(room_name) do
     Logger.info("process #{inspect(self())} started")
-    ChatServer.connect(self(), room_name)
+    Room.connect(self(), room_name)
     {:ok, room_name}
   end
 
@@ -12,7 +12,7 @@ defmodule Client do
     # 解析JSON消息
     case Jason.decode(raw_message) do
       {:ok, %{"msg" => message}} ->
-        ChatServer.broadcast(self(), room_name, message)
+        Room.broadcast(self(), room_name, message)
         {:ok, room_name}
       _ ->
         # 处理解析失败或其他消息的情况
@@ -21,13 +21,13 @@ defmodule Client do
   end
 
   def terminate(:timeout, room_name) do
-    ChatServer.disconnect(self(), room_name)
+    Room.disconnect(self(), room_name)
     {:ok, room_name}
   end
 
   def terminate(reason, room_name) do
     # 这里可以添加适当的日志记录或错误处理逻辑
-    IO.puts("EchoServer terminated with reason: #{inspect(reason)}")
+    IO.puts("Client terminated with reason: #{inspect(reason)}")
     {:ok, room_name}
   end
 

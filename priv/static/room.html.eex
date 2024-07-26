@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Chatroom</title>
+    <link rel="stylesheet" href="/css/room.css">
     <script>
         window.ROOM_NAME = "<%= room_name %>";
     </script>
 </head>
 <body>
     <h2>Welcome to the Room: <%= room_name %></h2>
-    <input type="text" id="messageInput" placeholder="Enter your message...">
-    <button onclick="sendMessage()">Send</button>
+    <div id="chat-container">
+        <input type="text" id="messageInput" placeholder="Enter your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
     <div id="responseArea"></div>
-
-    <script src="js/room.js"></script>
+    <script src="/js/room.js"></script>
 </body>
 </html>

@@ -2,8 +2,9 @@ defmodule Chatroom.LoginController do
 
   require Logger
 
-  def index do
-    login_page()
+  def index(conn) do
+    page = login_page()
+    Plug.Conn.send_resp(conn, 200, page)
   end
 
   defp login_page do

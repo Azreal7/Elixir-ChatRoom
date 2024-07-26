@@ -12,7 +12,7 @@ alias Chatroom.ChatroomSupervisor
     Logger.info("args: #{inspect(port)}")
     webserver_spec = {Bandit, plug: Router, scheme: :http, port: port}
     children = [
-      {Registry, keys: :unique, name: Registry.ChatServer},
+      {Registry, keys: :unique, name: Registry.Room},
       {ChatroomSupervisor, port},
       Chatroom.Repo,
       webserver_spec

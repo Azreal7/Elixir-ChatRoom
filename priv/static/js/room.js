@@ -1,5 +1,5 @@
 const room_name = window.ROOM_NAME;
-const socket = new WebSocket(`ws://localhost:4000/socket/${room_name}`);
+const socket = new WebSocket(`ws://localhost:4000/api/rooms/${room_name}/subscribe`);
 const messageInput = document.getElementById('messageInput');
 const responseArea = document.getElementById('responseArea');
 
