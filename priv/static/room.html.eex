@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/room.css">
     <script>
         window.ROOM_NAME = "<%= room_name %>";
+        window.USER_NAME = "<%= user_name %>";
     </script>
 </head>
 <body>

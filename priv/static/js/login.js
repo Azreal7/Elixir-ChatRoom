@@ -15,7 +15,7 @@ document.getElementById('login-form').addEventListener('submit', async function(
             const data = await response.json(); // 解析响应体为JSON
             sessionStorage.setItem("token", data.token);
             // 登录成功，跳转到/rooms
-            window.location.href = '/rooms';
+            window.location.href = `users/${user_name}/rooms`;
         } else {
             alert('登录失败，请检查您的用户名和密码。');
         }

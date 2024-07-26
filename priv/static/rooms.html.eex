@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Rooms</title>
-    <link rel="stylesheet" href="css/rooms.css">
+    <link rel="stylesheet" href="/css/rooms.css">
+    <script>
+        window.USER_NAME = "<%= user_name %>";
+    </script>
 </head>
 <body>
     <div id="new-room-container">
@@ -13,6 +16,6 @@
     </div>
     <ul id="room-list"></ul>
     
-    <script src="js/rooms.js"></script>
+    <script src="/js/rooms.js"></script>
 </body>
 </html>

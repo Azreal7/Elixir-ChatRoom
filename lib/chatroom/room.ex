@@ -11,28 +11,29 @@ defmodule Room do
     GenServer.start_link(__MODULE__, room_name, name: {:global, :"#{room_name}"})
   end
 
-  def init(name) do
-    {:ok, %RoomInfo{name: name, sessions: [], history_message: Chatroom.Message.get_messages(name)}}
+  def init(room_name) do
+    {:ok, %RoomInfo{name: room_name, sessions: [], history_message: Chatroom.Message.get_messages(room_name)}}
   end
 
   def handle_call({:add_session, session}, _from, room_info) do
     Logger.info("#{inspect(session)} is trying to connect")
     # 发送前100条消息
     Enum.each(room_info.history_message, fn message ->
-      send(session, {:message, message})
+      send(session, {:message, message[:content], :user_name, message[:sender]})
     end)
     {:reply, :ok, %RoomInfo{room_info | sessions: room_info.sessions ++ [session]}}
   end
 
-  def handle_call({:mongo, message}, _from, room_info) do
+  def handle_call({:mongo, message, user_name}, _from, room_info) do
     Logger.info("trying to add message to mongo..")
     history_message = if length(room_info.history_message) >= 100 do
       tl(room_info.history_message)
     else
       room_info.history_message
     end
-    history_message = history_message ++ [message]
-    Chatroom.Message.add_message(message, "sender", room_info.name, DateTime.to_string(DateTime.utc_now()))
+    time_stamp = DateTime.to_string(DateTime.utc_now())
+    history_message = history_message ++ [%{content: message, sender: user_name, time_stamp: time_stamp}]
+    Chatroom.Message.add_message(message, user_name, room_info.name, time_stamp)
     {:reply, :ok, %RoomInfo{room_info | history_message: history_message}}
   end
 
@@ -46,10 +47,10 @@ defmodule Room do
     end
   end
 
-  def handle_cast({:broadcast, message, sender}, room_info) do
+  def handle_cast({:broadcast, message, sender, user_name}, room_info) do
     Enum.each(room_info.sessions, fn session ->
       if session != sender do
-        session |> send({:message, message})
+        session |> send({:message, message, :user_name, user_name})
       end
     end)
     {:noreply, room_info}
@@ -65,10 +66,10 @@ defmodule Room do
     GenServer.call({:global, :"#{room_name}"}, {:add_session, pid})
   end
 
-  def broadcast(pid, room_name, message) do
+  def broadcast(pid, room_name, message, user_name) do
     Logger.info("trying to broadcast")
-    GenServer.cast({:global, :"#{room_name}"}, {:broadcast, message, pid})
-    GenServer.call({:global, :"#{room_name}"}, {:mongo, message})
+    GenServer.cast({:global, :"#{room_name}"}, {:broadcast, message, pid, user_name})
+    GenServer.call({:global, :"#{room_name}"}, {:mongo, message, user_name})
   end
 
   def disconnect(pid, room_name) do

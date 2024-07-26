@@ -1,5 +1,6 @@
 const room_name = window.ROOM_NAME;
-const socket = new WebSocket(`ws://localhost:4000/api/rooms/${room_name}/subscribe`);
+const user_name = window.USER_NAME;
+const socket = new WebSocket(`ws://localhost:4000/api/users/${user_name}/rooms/${room_name}/subscribe`);
 const messageInput = document.getElementById('messageInput');
 const responseArea = document.getElementById('responseArea');
 
@@ -12,11 +13,12 @@ socket.addEventListener('open', (event) => {
 
 // 当从服务器接收到消息时
 socket.addEventListener('message', (event) => {
-    // const messageData = JSON.parse(event.data); 
-    const message = event.data;
-    // const processedMessage = processedMessage(messageData);
-    // displayResponse(`Received from other user: ${processedMessage}`);
-    displayResponse(`Received from other user: ${message}`)
+    const messageData = JSON.parse(event.data);
+    // 获取 user_name 和 message
+    const userName = messageData.user_name;
+    const message = messageData.message;
+    // 显示消息
+    displayResponse(`${userName} : ${message}`);
 });
 
 // 发送消息到服务器

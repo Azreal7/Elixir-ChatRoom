@@ -16,7 +16,7 @@ defmodule Chatroom.Message do
     (from m in Chatroom.Message,
       where: m.chatroom_name == ^chatroom_name,
       # limit: 2,
-      select: m.content)
+      select: %{content: m.content, sender: m.sender, time_stamp: m.time_stamp})
     |> Chatroom.Repo.all()
   end
 

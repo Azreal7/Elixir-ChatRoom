@@ -2,10 +2,7 @@ defmodule Chatroom.RoomController do
   require Logger
 
   def index(conn) do
-    resp = case File.read("priv/static/rooms.html") do
-      {:ok, body} -> body
-      {:error, _reason} -> "failed to load rooms website"
-    end
+    resp = EEx.eval_file("priv/static/rooms.html.eex", user_name: conn.params["user_name"])
     Plug.Conn.send_resp(conn, 200, resp)
   end
 

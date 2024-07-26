@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const user_name = window.USER_NAME;
+    console.log(user_name);
     const roomListElement = document.getElementById('room-list');
     const createRoomBtn = document.getElementById('create-room-btn');
     const roomNameInput = document.getElementById('room-name-input');
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             li.textContent = room;
             li.classList.add('room-item');
             console.log(room);
-            li.onclick = () => window.location.href = `/rooms/${room}`;
+            li.onclick = () => window.location.href = `/users/${user_name}/rooms/${room}`;
             roomListElement.appendChild(li);
         });
     }
