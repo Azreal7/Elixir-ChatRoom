@@ -37,10 +37,11 @@ defmodule Client do
     {:ok, user_and_room}
   end
 
-  def handle_info({:message, message, :user_name, user_name}, user_and_room) do
+  def handle_info({:message, message, :user_name, user_name, :time_stamp, time_stamp}, user_and_room) do
     data = %{
       message: message,
-      user_name: user_name
+      user_name: user_name,
+      time_stamp: time_stamp
     }
     payload = Jason.encode!(data)
     {:reply, :ok, {:text, payload}, user_and_room}
