@@ -2,12 +2,10 @@
 
 启动方式：
 ```
-PORT=4000 iex --sname node1 -S mix
-PORT=4001 iex --sname node2 -S mix
-...
-PORT=n iex --sname noden -S mix
+sh quickstart.sh
 ```
-已支持无限扩容，只需在启动时指定不同的端口即可。
+修改WORK_DIR为你的项目路径即可。
+需要动态增删节点调整nginx配置和quickstart.sh脚本。
 
 检查进程用这个：
 ```
