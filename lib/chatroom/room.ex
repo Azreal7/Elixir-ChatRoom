@@ -31,7 +31,7 @@ defmodule Room do
     else
       room_info.history_message
     end
-    time_stamp = DateTime.to_string(DateTime.utc_now())
+    time_stamp = DateTime.utc_now()|> Calendar.strftime("%Y-%m-%d %H:%M:%S")
     history_message = history_message ++ [%{content: message, sender: user_name, time_stamp: time_stamp}]
     Chatroom.Message.add_message(message, user_name, room_info.name, time_stamp)
     {:reply, :ok, %RoomInfo{room_info | history_message: history_message}}

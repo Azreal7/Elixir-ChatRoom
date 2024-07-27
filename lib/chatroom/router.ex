@@ -18,5 +18,6 @@ defmodule Router do
   get "/users/:user_name/rooms/:room_name", do: Chatroom.ChatController.index(conn)
   post "/api/users", do: Chatroom.LoginController.register(conn)
   get "api/users/:user_name/rooms/:room_name/subscribe", do: Chatroom.ChatController.update(conn)
+  delete "api/rooms/:room_name", do: Chatroom.RoomController.remove_room(conn)
   match _, do: send_resp(conn, 404, "not found")
 end

@@ -10,7 +10,8 @@
     </script>
 </head>
 <body>
-    <h2>Welcome to the Room: <%= room_name %></h2>
+    <a id="back-to-list-button" href="/users/<%= user_name %>/rooms">Back to Room List</a>
+    <h2><%= user_name %>: Welcome to <%= room_name %></h2>
     <div id="chat-container">
         <input type="text" id="messageInput" placeholder="Enter your message...">
         <button onclick="sendMessage()">Send</button>
