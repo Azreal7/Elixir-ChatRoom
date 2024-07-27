@@ -36,6 +36,33 @@ document.addEventListener('DOMContentLoaded', function() {
             li.textContent = room;
             li.classList.add('room-item');
             console.log(room);
+
+            // 创建删除按钮
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = '删除';
+            deleteBtn.classList.add('delete-btn');
+            deleteBtn.onclick = async (event) => {
+                event.stopPropagation(); // 防止触发li的点击事件
+                try {
+                    const token = sessionStorage.getItem('token');
+                    const response = await fetch(`/api/rooms/${room}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `${token}`
+                        }
+                    });
+                    if (response.ok) {
+                        await fetchRoomList();
+                    } else {
+                        throw new Error('Failed to delete room');
+                    }
+                } catch (error) {
+                    console.error('Error deleting room:', error);
+                    alert('Failed to delete room. Please try again or login');
+                }
+            };
+
+            li.appendChild(deleteBtn);
             li.onclick = () => window.location.href = `/users/${user_name}/rooms/${room}`;
             roomListElement.appendChild(li);
         });

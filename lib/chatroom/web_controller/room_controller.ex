@@ -42,6 +42,24 @@ defmodule Chatroom.RoomController do
         |> Plug.Conn.send_resp(200, encoded_body)
       {:error, _} ->
         Plug.Conn.send_resp(conn, 401, "Unauthorized")
-      end
+    end
+  end
+
+  def remove_room(conn) do
+    {:ok, body_params, _conn} = Plug.Conn.read_body(conn)
+    token = Plug.Conn.get_req_header(conn, "authorization")
+    Logger.info("token: #{inspect(token)}")
+    case Chatroom.Auth.verify_token(hd(token)) do
+      {:ok, _} ->
+        room_name = conn.params["room_name"]
+        Logger.info(room_name)
+        Chatroom.Rooms.remove_room(room_name)
+        conn
+        |> Plug.Conn.put_status(:ok)
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.send_resp(200, "Successfully deleted")
+      {:error, _} ->
+        Plug.Conn.send_resp(conn, 401, "Unauthorized")
+    end
   end
 end

@@ -12,7 +12,6 @@ body {
     justify-content: center;
     min-height: 100vh;
 }
-
 /* 新房间容器样式（包含输入框和创建按钮） */
 #new-room-container {
     margin-bottom: 1em;
@@ -28,7 +27,6 @@ body {
     width: 100%;
     max-width: 600px;
 }
-
 #new-room-container input {
     flex: 1;
     padding: 0.5em;
@@ -36,7 +34,6 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 #new-room-container button {
     padding: 0.5em 1em;
     background-color: #6200ea;
@@ -46,11 +43,9 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
 #new-room-container button:hover {
     background-color: #3700b3;
 }
-
 /* 房间列表样式 */
 #room-list {
     list-style-type: none;
@@ -63,36 +58,54 @@ body {
     width: 100%;
     max-width: 600px;
 }
-
 .room-item {
     cursor: pointer;
     padding: 0.75em 1em;
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative; /* 为绝对定位的删除按钮设置参考点 */
 }
-
 .room-item:last-child {
     border-bottom: none;
 }
-
 .room-item:hover {
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 /* 响应式设计 */
 @media (max-width: 600px) {
     #new-room-container {
         padding: 0.5em;
         flex-direction: column;
     }
-
     #new-room-container input {
         margin-right: 0;
         margin-bottom: 0.5em;
     }
-
     .room-item {
         padding: 0.5em;
     }
+}
+/* 删除按钮样式 */
+.delete-btn {
+    position: absolute; /* 绝对定位 */
+    right: 1em; /* 调整到右侧 */
+    top: 50%; /* 垂直居中 */
+    transform: translateY(-50%); /* 垂直居中修正 */
+    display: none;
+    padding: 0.25em 0.5em;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+/* 删除按钮悬停效果 */
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+/* 在房间项悬停时显示删除按钮 */
+.room-item:hover .delete-btn {
+    display: inline;
 }

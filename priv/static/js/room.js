@@ -14,33 +14,40 @@ socket.addEventListener('open', (event) => {
 // 当从服务器接收到消息时
 socket.addEventListener('message', (event) => {
     const messageData = JSON.parse(event.data);
-    // 获取 user_name 和 message
     const userName = messageData.user_name;
     const message = messageData.message;
-    // 显示消息
-    displayResponse(`${userName} : ${message}`);
+    const time_stamp = messageData.time_stamp;
+    displayResponse(`${userName}: ${message}`, time_stamp);
 });
 
 // 发送消息到服务器
 function sendMessage() {
     const message = messageInput.value.trim();
     if (message !== '') {
-        socket.send(JSON.stringify({msg: message}));
-        displayResponse(`You: ${message}`);
+        const time_stamp = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }); // 格式化客户端时间
+        socket.send(JSON.stringify({ msg: message, time_stamp: time_stamp }));
         messageInput.value = ''; // 清空输入框
     }
 }
 
 // 在页面上显示服务器响应
-function displayResponse(text) {
+function displayResponse(text, timestamp) {
     const p = document.createElement('p');
-    p.textContent = text;
+    const messageSpan = document.createElement('span');
+    messageSpan.textContent = text;
+
+    const timestampSpan = document.createElement('span');
+    timestampSpan.className = 'timestamp';
+    timestampSpan.textContent = timestamp;
+
+    p.appendChild(messageSpan);
+    p.appendChild(timestampSpan);
     responseArea.appendChild(p);
 }
 
 messageInput.addEventListener('keydown', (event) => {
-    if (event.key == 'Enter') {
+    if (event.key === 'Enter') {
         event.preventDefault();
         sendMessage();
     }
-})
+});
