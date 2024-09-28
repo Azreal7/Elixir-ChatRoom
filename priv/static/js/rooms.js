@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Attempting to read token...");
             const token = sessionStorage.getItem('token');
             console.log(token);
-            const response = await fetch('/api/rooms', {
+            const response = await fetch('/rooms', {
                 headers: {
                     'Authorization' : `${token}`
                 }
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.stopPropagation(); // 防止触发li的点击事件
                 try {
                     const token = sessionStorage.getItem('token');
-                    const response = await fetch(`/api/rooms/${room}`, {
+                    const response = await fetch(`/rooms/${room}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `${token}`
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!roomName) return alert('Room name cannot be empty.');
         try {
             // 发送创建房间请求
-            const response = await fetch('/api/rooms', {
+            const response = await fetch('/rooms', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

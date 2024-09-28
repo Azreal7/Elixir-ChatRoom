@@ -7,7 +7,7 @@ defmodule Client do
 
   # room_name 存储client对应哪个room
   def init(user_and_room) do
-    Logger.info("process #{inspect(self())} started")
+    Logger.info("user #{inspect(self())} started")
     Room.connect(self(), user_and_room[:room_name])
     {:ok, user_and_room}
   end
@@ -25,7 +25,7 @@ defmodule Client do
   end
 
   def terminate(:timeout, user_and_room) do
-    Logger.info("client exited")
+    Logger.info("client #{inspect(user_and_room[:user_name])} exited #{inspect(user_and_room[:room_name])}")
     Room.disconnect(self(), user_and_room[:room_name])
     {:ok, user_and_room}
   end
@@ -33,7 +33,7 @@ defmodule Client do
   def terminate(reason, user_and_room) do
     # 这里可以添加适当的日志记录或错误处理逻辑
     IO.puts("Client terminated with reason: #{inspect(reason)}")
-    Room.disconnect(self(), user_and_room[:user_name])
+    Room.disconnect(self(), user_and_room[:room_name])
     {:ok, user_and_room}
   end
 

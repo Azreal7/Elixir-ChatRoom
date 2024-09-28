@@ -1,6 +1,6 @@
 const room_name = window.ROOM_NAME;
 const user_name = window.USER_NAME;
-const socket = new WebSocket(`ws://localhost:4000/api/users/${user_name}/rooms/${room_name}/subscribe`);
+const socket = new WebSocket(`ws://localhost:4000/users/${user_name}/rooms/${room_name}/subscribe`);
 const messageInput = document.getElementById('messageInput');
 const responseArea = document.getElementById('responseArea');
 

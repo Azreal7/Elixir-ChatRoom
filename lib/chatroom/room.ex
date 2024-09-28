@@ -12,6 +12,7 @@ defmodule Room do
   end
 
   def init(room_name) do
+    Logger.info("room #{inspect(room_name)} init..")
     {:ok, %RoomInfo{name: room_name, sessions: [], history_message: Chatroom.Message.get_messages(room_name)}}
   end
 
@@ -47,7 +48,7 @@ defmodule Room do
     end
   end
 
-  def handle_cast({:broadcast, message, sender, user_name}, room_info) do
+  def handle_cast({:broadcast, message, _sender, user_name}, room_info) do
     time_stamp = DateTime.utc_now()|> Calendar.strftime("%Y-%m-%d %H:%M:%S")
     Enum.each(room_info.sessions, fn session ->
       session |> send({:message, message, :user_name, user_name, :time_stamp, time_stamp})
@@ -62,6 +63,7 @@ defmodule Room do
       :undefined -> Chatroom.ChatroomSupervisor.new_room(room_name)
       _ -> nil
     end
+    :timer.sleep(500)
     GenServer.call({:global, :"#{room_name}"}, {:add_session, pid})
   end
 

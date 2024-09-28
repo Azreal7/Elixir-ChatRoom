@@ -23,7 +23,7 @@ defmodule Chatroom.ChatroomSupervisor do
     spec = %{
       id: {:room, room_name},
       start: {Room, :start_link, [room_name]},
-      restart: :permanent,
+      restart: :temporary,
       type: :worker
     }
     :rpc.call(

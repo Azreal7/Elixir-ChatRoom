@@ -30,7 +30,7 @@ document.getElementById('register-button').addEventListener('click', async funct
     const password = document.getElementById('password').value;
     try {
         // 发起注册请求
-        const response = await fetch('/api/users', {
+        const response = await fetch('/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
